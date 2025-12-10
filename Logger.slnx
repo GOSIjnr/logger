@@ -1,0 +1,9 @@
+<Solution>
+
+  <Folder Name="/src/">
+    <Project Path="src/Logger.Api/Logger.Api.csproj" />
+    <Project Path="src/Logger.Client/Logger.Client.csproj" />
+    <Project Path="src/Logger.Shared/Logger.Shared.csproj" />
+  </Folder>
+
+</Solution>
