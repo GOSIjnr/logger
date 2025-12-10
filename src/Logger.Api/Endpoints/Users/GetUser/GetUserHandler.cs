@@ -1,0 +1,37 @@
+using System.Text.Json;
+using Logger.Api.Constants.Responses;
+using Logger.Api.Data;
+using Logger.Api.Entities;
+using Logger.Api.Extensions.Entities;
+using Logger.Api.Extensions.Responses;
+using Logger.Api.Interfaces.Services;
+using Logger.Api.Models;
+
+namespace Logger.Api.Endpoints.Users.GetUser;
+
+public static class GetUserHandler
+{
+    public static async Task<IResult> Handle(Guid id, AppDbContext db, IDataEncryptionService dataEncryptionService, CancellationToken ct)
+    {
+        User user = await db.Users.FindAsync([id], cancellationToken: ct)
+            ?? throw ResponseCatalog.User.NotFound.ToException();
+
+        byte[] dataBlob = dataEncryptionService.DecryptData(user.EncryptedData);
+        var sensitiveData = JsonSerializer.Deserialize<UserSensitive>(dataBlob);
+
+        if (sensitiveData is null)
+            return Results.BadRequest("Invalid data");
+
+        user.SetSensitiveData(sensitiveData);
+
+        if (user.SensitiveData is null)
+            return Results.BadRequest("Invalid sensitive data");
+
+        return Results.Ok(ResponseCatalog.User.ProfileRetrieved
+            .As<UserResponse>()
+            .WithData(user.ToUserResponse())
+            .ToOperationResult()
+            .ToApiResponse()
+        );
+    }
+}
