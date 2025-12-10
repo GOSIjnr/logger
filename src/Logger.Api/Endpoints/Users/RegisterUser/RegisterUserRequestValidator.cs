@@ -23,8 +23,9 @@ public class RegisterUserRequestValidator : AbstractValidator<RegisterUserReques
 
         RuleFor(x => x.Email)
             .NotEmpty()
-            .EmailAddress()
-            .MaximumLength(254);
+            .MaximumLength(254)
+            .Matches(@"^(?!\.)([A-Za-z0-9._%+-]+)(?<!\.)@([A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*)\.[A-Za-z]{2,}$")
+            .WithMessage("Email is not a valid email address.");
 
         RuleFor(x => x.Password)
             .NotEmpty()
