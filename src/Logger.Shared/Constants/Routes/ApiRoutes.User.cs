@@ -1,4 +1,4 @@
-namespace Logger.Api.Constants.Routes;
+namespace Logger.Shared.Constants.Routes;
 
 public partial class ApiRoutes
 {

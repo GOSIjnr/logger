@@ -1,6 +1,6 @@
 using Logger.Api.Exceptions;
-using Logger.Api.Models;
-using Logger.Api.Enums;
+using Logger.Shared.Enums;
+using Logger.Shared.Models;
 
 namespace Logger.Api.Extensions.Responses;
 

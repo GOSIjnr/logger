@@ -1,6 +1,6 @@
 using Logger.Api.Common.Responses;
-using Logger.Api.Enums;
-using Logger.Api.Models;
+using Logger.Shared.Enums;
+using Logger.Shared.Models;
 
 namespace Logger.Api.Constants.Responses;
 

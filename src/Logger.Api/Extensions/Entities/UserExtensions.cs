@@ -1,5 +1,6 @@
 using Logger.Api.Endpoints.Users;
 using Logger.Api.Entities;
+using Logger.Shared.DTOs.User;
 
 namespace Logger.Api.Extensions.Entities;
 

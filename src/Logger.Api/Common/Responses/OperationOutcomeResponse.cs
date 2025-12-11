@@ -1,4 +1,4 @@
-using Logger.Api.Models;
+using Logger.Shared.Models;
 
 namespace Logger.Api.Common.Responses;
 

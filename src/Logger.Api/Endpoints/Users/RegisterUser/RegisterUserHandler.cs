@@ -1,15 +1,16 @@
 using Logger.Api.Constants.Responses;
-using Logger.Api.Constants.Routes;
 using Logger.Api.Data;
 using Logger.Api.Entities;
 using Logger.Api.Extensions.Entities;
 using Logger.Api.Extensions.Responses;
 using Logger.Api.Interfaces.Services;
-using Logger.Api.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Logger.Api.Extensions.Validations;
+using Logger.Shared.Models;
+using Logger.Shared.Constants.Routes;
+using Logger.Shared.DTOs.User;
 
 namespace Logger.Api.Endpoints.Users.RegisterUser;
 
@@ -21,7 +22,7 @@ public static class RegisterUserHandler
 
         if (errors.Count > 0)
             throw ResponseCatalog.System.ValidationFailed
-                .AppendDetails([.. errors])
+                .AppendDetails(errors.ToArray())
                 .ToException();
 
         string normalizedEmail = request.Email.Trim().ToLowerInvariant();

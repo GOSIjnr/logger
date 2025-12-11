@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Logger.Api.Exceptions;
 using Logger.Api.Extensions.Responses;
-using Logger.Api.Models;
+using Logger.Shared.Models;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.Options;
 

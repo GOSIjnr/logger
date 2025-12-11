@@ -1,5 +1,6 @@
 using Logger.Api.Common.Responses;
 using Logger.Api.Models;
+using Logger.Shared.Models;
 
 namespace Logger.Api.Extensions.Responses;
 

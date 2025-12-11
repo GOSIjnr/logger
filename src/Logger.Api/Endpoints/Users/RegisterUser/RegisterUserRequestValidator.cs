@@ -1,4 +1,5 @@
 using FluentValidation;
+using Logger.Shared.DTOs.User;
 
 namespace Logger.Api.Endpoints.Users.RegisterUser;
 

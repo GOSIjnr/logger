@@ -1,4 +1,4 @@
-namespace Logger.Api.Endpoints.Users;
+namespace Logger.Shared.DTOs.User;
 
 public record UserResponse(
     Guid Id,

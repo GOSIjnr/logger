@@ -1,4 +1,4 @@
-namespace Logger.Api.Enums;
+namespace Logger.Shared.Enums;
 
 public enum ResponseSeverity
 {

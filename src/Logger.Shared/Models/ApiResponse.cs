@@ -1,4 +1,4 @@
-namespace Logger.Api.Models;
+namespace Logger.Shared.Models;
 
 public record ApiResponse<T>(
     string? TraceId,

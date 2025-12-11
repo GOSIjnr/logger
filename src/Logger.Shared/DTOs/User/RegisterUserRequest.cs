@@ -1,4 +1,4 @@
-namespace Logger.Api.Endpoints.Users.RegisterUser;
+namespace Logger.Shared.DTOs.User;
 
 public record RegisterUserRequest(
     string FirstName,

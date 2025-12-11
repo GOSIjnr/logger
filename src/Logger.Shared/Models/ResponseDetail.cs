@@ -1,6 +1,6 @@
-using Logger.Api.Enums;
+using Logger.Shared.Enums;
 
-namespace Logger.Api.Models;
+namespace Logger.Shared.Models;
 
 public record ResponseDetail(
     string Message,

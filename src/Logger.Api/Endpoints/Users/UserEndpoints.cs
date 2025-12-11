@@ -1,6 +1,6 @@
-using Logger.Api.Constants.Routes;
 using Logger.Api.Endpoints.Users.GetUser;
 using Logger.Api.Endpoints.Users.RegisterUser;
+using Logger.Shared.Constants.Routes;
 
 namespace Logger.Api.Endpoints.Users;
 

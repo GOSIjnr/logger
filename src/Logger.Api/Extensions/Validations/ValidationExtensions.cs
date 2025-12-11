@@ -1,7 +1,7 @@
-using Logger.Api.Enums;
-using Logger.Api.Models;
 using FluentValidation;
 using FluentValidation.Results;
+using Logger.Shared.Enums;
+using Logger.Shared.Models;
 
 namespace Logger.Api.Extensions.Validations;
 

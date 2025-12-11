@@ -6,6 +6,7 @@ using Logger.Api.Extensions.Entities;
 using Logger.Api.Extensions.Responses;
 using Logger.Api.Interfaces.Services;
 using Logger.Api.Models;
+using Logger.Shared.DTOs.User;
 
 namespace Logger.Api.Endpoints.Users.GetUser;
 

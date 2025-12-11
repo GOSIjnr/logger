@@ -1,3 +1,5 @@
+using Logger.Shared.Models;
+
 namespace Logger.Api.Models;
 
 public record OperationResult<T>(

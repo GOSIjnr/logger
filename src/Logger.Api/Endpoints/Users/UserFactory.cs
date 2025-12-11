@@ -3,6 +3,7 @@ using Logger.Api.Endpoints.Users.RegisterUser;
 using Logger.Api.Entities;
 using Logger.Api.Interfaces.Services;
 using Logger.Api.Models;
+using Logger.Shared.DTOs.User;
 
 namespace Logger.Api.Endpoints.Users;
 
