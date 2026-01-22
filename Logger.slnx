@@ -1,9 +1,19 @@
 <Solution>
 
+  <Folder Name="/config/">
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+
   <Folder Name="/src/">
     <Project Path="src/Logger.Api/Logger.Api.csproj" />
     <Project Path="src/Logger.Client/Logger.Client.csproj" />
     <Project Path="src/Logger.Shared/Logger.Shared.csproj" />
+    <Project Path="src/Logger.Application/Logger.Application.csproj" />
+    <Project Path="src/Logger.Domain/Logger.Domain.csproj" />
+    <Project Path="src/Logger.Infrastructure/Logger.Infrastructure.csproj" />
+    <Project Path="src/Logger.Persistence/Logger.Persistence.csproj" />
   </Folder>
 
 </Solution>

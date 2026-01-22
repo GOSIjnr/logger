@@ -1,0 +1,23 @@
+using Logger.Application.Common.Responses;
+using Logger.Application.Constants.Http;
+
+namespace Logger.Application.Constants.Responses;
+
+internal static partial class ResponseCatalog
+{
+    public static class User
+    {
+        public static readonly OperationFailureResponse NotFound = new(
+            Id: "USER_NOT_FOUND",
+            StatusCode: HttpStatusCodes.NotFound,
+            Title: "User not found.",
+            Details: []
+        );
+
+        public static readonly OperationOutcomeResponse Retrieved = new(
+            Id: "USER_RETRIEVED",
+            Title: "User retrieved successfully.",
+            Details: []
+        );
+    }
+}

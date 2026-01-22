@@ -1,41 +1,78 @@
-var builder = WebApplication.CreateBuilder(args);
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Logger.Api.Authentication;
+using Logger.Api.Constants.Auth;
+using Logger.Api.Endpoints.Auth;
+using Logger.Api.Endpoints.Base;
+using Logger.Api.Endpoints.Users;
+using Logger.Api.Extensions.Claims;
+using Logger.Api.Extensions.OpenApi;
+using Logger.Api.Middleware;
+using Logger.Application;
+using Logger.Application.CQRS.Messaging;
+using Logger.Infrastructure;
+using Logger.Persistence;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Json;
+using Scalar.AspNetCore;
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration, [typeof(IMediator).Assembly]);
 
-// Configure the HTTP request pipeline.
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthentication(AuthenticationSchemes.Session)
+    .AddScheme<AuthenticationSchemeOptions, SessionAuthenticationHandler>(
+        AuthenticationSchemes.Session,
+        options => { options.ClaimsIssuer = "Logger"; }
+    );
+
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthenticationResultHandler>();
+
+builder.Services.AddAuthorizationBuilder().AddCustomPolicies();
+
+builder.Services.Configure<JsonOptions>(opts =>
+{
+    JsonSerializerOptions serializer = opts.SerializerOptions;
+
+    serializer.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    serializer.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    serializer.WriteIndented = true;
+    serializer.Converters.Add(new JsonStringEnumConverter());
+});
+
+builder.Services.AddOpenApi(options => { options.AddCustomOpenApiTransformer(); });
+
+WebApplication app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    app.MapScalarApiReference(options =>
+    {
+        options.Title = "Logger API Gateway";
+        options.DefaultHttpClient = new(ScalarTarget.Node, ScalarClient.Fetch);
+    });
+}
+else
+{
+    app.UseHttpsRedirection();
 }
 
-app.UseHttpsRedirection();
+app.UseMiddleware<TraceIdMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<SessionRefreshMiddleware>();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.UseAuthentication();
+app.UseAuthorization();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapBaseEndpoints();
+app.MapAuthEndpoints();
+app.MapUserEndpoints();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
