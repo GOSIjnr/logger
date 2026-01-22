@@ -1,6 +1,6 @@
 ﻿namespace Logger.Application.Models;
 
-public record OperationResult<T>(
+public partial record OperationResult<T>(
     string MessageId,
     string Message,
     List<ResponseDetail>? Details,
