@@ -4,9 +4,6 @@ using Logger.Api.Authentication;
 using Logger.Api.Constants.Auth;
 using Logger.Api.Endpoints.Auth;
 using Logger.Api.Endpoints.Base;
-using Logger.Api.Endpoints.Incidents;
-using Logger.Api.Endpoints.Organizations;
-using Logger.Api.Endpoints.Sheets;
 using Logger.Api.Endpoints.Users;
 using Logger.Api.Extensions.Claims;
 using Logger.Api.Extensions.OpenApi;
@@ -77,8 +74,5 @@ app.UseAuthorization();
 app.MapBaseEndpoints();
 app.MapAuthEndpoints();
 app.MapUserEndpoints();
-app.MapOrganizationEndpoints();
-app.MapSheetEndpoints();
-app.MapIncidentEndpoints();
 
 app.Run();
